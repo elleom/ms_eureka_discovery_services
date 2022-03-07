@@ -1,9 +1,12 @@
 package com.lm.usersservice.controller;
 
+import com.lm.usersservice.ui.model.User;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author el_le
@@ -23,5 +26,10 @@ public class UserController {
     public String getStatus(){
 
         return "Online: \nport=" + env.getProperty("local.server.port");
+    }
+
+    @PostMapping(value = "/user")
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
