@@ -10,6 +10,8 @@ import java.io.Serializable;
  * @since 07/03/2022 21:39
  */
 
+@Setter
+@Getter
 @Entity
 @Table(name= "users")
 public class UserEntity implements Serializable {

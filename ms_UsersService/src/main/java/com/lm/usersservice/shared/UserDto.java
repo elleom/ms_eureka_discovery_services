@@ -19,7 +19,6 @@ public class UserDto implements Serializable {
     @Getter(value = AccessLevel.NONE)
     private static final long serialVersionUID = 1149672779392564839L;
 
-    private String id;
     private String firstname;
     private String lastname;
     private String password;
