@@ -33,13 +33,13 @@ public class UserController {
         return "Online: \nport=" + env.getProperty("local.server.port");
     }
 
-    @PostMapping(value = "/user")
+    @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         UserDto userDto = mapper.map(user, UserDto.class);
         UserDto savedUserDto = userService.createUser(userDto);
         user = mapper.map(savedUserDto, User.class);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
