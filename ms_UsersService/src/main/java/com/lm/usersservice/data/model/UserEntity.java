@@ -1,4 +1,4 @@
-package com.lm.usersservice.data;
+package com.lm.usersservice.data.model;
 
 import lombok.*;
 
