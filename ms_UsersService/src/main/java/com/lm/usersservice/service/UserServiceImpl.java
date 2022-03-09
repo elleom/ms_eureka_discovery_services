@@ -5,6 +5,7 @@ import com.lm.usersservice.repository.UserRepository;
 import com.lm.usersservice.shared.UserDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -19,9 +20,11 @@ public class UserServiceImpl implements UserService {
 
     private ModelMapper mapper;
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl( UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -29,12 +32,12 @@ public class UserServiceImpl implements UserService {
         //creates mapper and set strategy
         mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        userDto.setEncryptedPass(bCryptPasswordEncoder.encode(userDto.getPassword()));
 
         userDto.setUserId(UUID.randomUUID().toString());
 
         // dto to entity
         UserEntity userEntity = mapper.map(userDto, UserEntity.class);
-        userEntity.setEncryptedPass("test");
         UserEntity savedUser = userRepository.save(userEntity);
 
         //entity to dto
