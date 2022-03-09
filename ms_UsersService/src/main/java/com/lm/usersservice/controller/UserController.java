@@ -3,6 +3,7 @@ package com.lm.usersservice.controller;
 import com.lm.usersservice.service.UserService;
 import com.lm.usersservice.shared.UserDto;
 import com.lm.usersservice.ui.model.User;
+import com.lm.usersservice.ui.model.UserResponseModel;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
@@ -34,12 +35,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<UserResponseModel> createUser(@Valid @RequestBody User user) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         UserDto userDto = mapper.map(user, UserDto.class);
         UserDto savedUserDto = userService.createUser(userDto);
-        user = mapper.map(savedUserDto, User.class);
-        return new ResponseEntity<>(HttpStatus.OK);
+        UserResponseModel userResponseModel = mapper.map(savedUserDto, UserResponseModel.class);
+        return new ResponseEntity<>(userResponseModel, HttpStatus.CREATED);
     }
 }
