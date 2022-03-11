@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lm.usersservice.service.UserService;
 import com.lm.usersservice.shared.UserDto;
 import com.lm.usersservice.ui.model.LoginRequestModel;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author el_le
@@ -58,7 +63,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String username = ((User) auth.getPrincipal()).getUsername();
         UserDto userDto = userService.getUserDetailsByEmail(username);
 
+        //CREATES THE jwt TO ADD TO THE RESPONSE HEADER
+        String token = Jwts.builder()
+                .setSubject(userDto.getUserId())
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(Objects.requireNonNull(env.getProperty("token.expiration_time")))))
+                .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
+                .compact();
+
+        //loads the newly created JWT into the response
+        response.addHeader("token", token);
+        response.addHeader("userId", userDto.getUserId());
 
     }
-
 }
