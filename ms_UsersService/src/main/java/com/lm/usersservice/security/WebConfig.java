@@ -45,7 +45,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     public AuthenticationFilter getAuthenticationFilter() throws Exception {
         AuthenticationFilter auth = new AuthenticationFilter(userService, env, authenticationManager());
-//        auth.setAuthenticationManager();
+
+        //overrides login default path
+        auth.setFilterProcessesUrl(env.getProperty("login.url"));
         return auth;
     }
 
