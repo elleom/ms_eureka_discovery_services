@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * @since 01/03/2022 19:07
  */
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final Environment env;
