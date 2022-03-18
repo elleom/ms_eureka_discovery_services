@@ -66,17 +66,19 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
         String secret = env.getProperty("token.secret");
 
-        String subject = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(jwt)
-                .getBody()
-                .getSubject();
+        try {
+            String subject = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwt) // parseJW signature
+                    .getBody()
+                    .getSubject();
 
-        if ( subject == null || subject.isEmpty()){
+            if ( subject == null || subject.isEmpty()){
+                returnValue = false;
+            }
+        } catch (Exception e) {
             returnValue = false;
         }
-
-
         return returnValue;
     }
 
