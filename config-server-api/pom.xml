@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lm</groupId>
-    <artifactId>api-config-server</artifactId>
+    <artifactId>config-server-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>api-config-server</name>
-    <description>api-config-server</description>
+    <name>config-server-api</name>
+    <description>config-server-api</description>
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>

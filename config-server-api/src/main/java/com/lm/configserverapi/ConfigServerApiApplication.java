@@ -1,4 +1,4 @@
-package com.lm.apiconfigserver;
+package com.lm.configserverapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 
 @SpringBootApplication
 @EnableConfigServer
-public class ApiConfigServerApplication {
+public class ConfigServerApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApiConfigServerApplication.class, args);
+        SpringApplication.run(ConfigServerApiApplication.class, args);
     }
 
 }
