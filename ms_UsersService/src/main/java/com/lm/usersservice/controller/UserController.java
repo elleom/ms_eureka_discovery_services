@@ -32,7 +32,8 @@ public class UserController {
 
     @GetMapping("/status/check")
     public String getStatus() {
-        return "Online: \nport=" + env.getProperty("local.server.port");
+        System.out.println(env.getProperty("token.secret"));
+        return "Online: \nport=" + env.getProperty("local.server.port") + ", with token = " + env.getProperty("token.secret") ;
     }
 
     @PostMapping(
