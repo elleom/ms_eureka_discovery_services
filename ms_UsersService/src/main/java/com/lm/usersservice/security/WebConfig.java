@@ -36,6 +36,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
+                .antMatchers("/h2-console/**")
+                .permitAll()
                 .antMatchers("/api/users/**")
                 .permitAll().and().addFilter(getAuthenticationFilter());
         http.headers()
