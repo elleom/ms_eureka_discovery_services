@@ -49,4 +49,13 @@ public class UserController {
         return new ResponseEntity<>(userResponseModel, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseModel> getUserDetails(@PathVariable String userId){
+        ModelMapper mapper = new ModelMapper();
+        UserDto userDto = userService.getUserDetailsById(userId);
+        UserResponseModel userResponseModel = mapper.map(userDto, UserResponseModel.class);
+
+        return new ResponseEntity<>(userResponseModel, HttpStatus.OK);
+    }
+
 }
