@@ -1,8 +1,10 @@
 package com.lm.usersservice.shared;
 
+import com.lm.usersservice.ui.model.AlbumResponseModel;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author el_le
@@ -25,6 +27,7 @@ public class UserDto implements Serializable {
     private String email;
     private String userId;
     private String encryptedPass;
+    private List<AlbumResponseModel> albumsList;
 
 }
 
