@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserDetailsById(String userId) {
+    public UserDto getUserByUserId(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
         if(userEntity == null) throw new UsernameNotFoundException(userId);
         UserDto userDto = mapper.map(userEntity, UserDto.class);
