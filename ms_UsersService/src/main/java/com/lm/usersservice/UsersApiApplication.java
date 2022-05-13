@@ -1,5 +1,6 @@
 package com.lm.usersservice;
 
+import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -27,6 +28,11 @@ public class UsersApiApplication {
     @LoadBalanced
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    Logger.Level getLoggerLevel() {
+        return Logger.Level.FULL;
     }
 
 }

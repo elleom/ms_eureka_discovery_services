@@ -1,5 +1,6 @@
 package com.lm.usersservice.service;
 
+import com.lm.usersservice.data.feign.AlbumsServiceClient;
 import com.lm.usersservice.data.model.UserEntity;
 import com.lm.usersservice.repository.UserRepository;
 import com.lm.usersservice.shared.UserDto;
@@ -33,14 +34,16 @@ public class UserServiceImpl implements UserService {
     private ModelMapper mapper;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final RestTemplate restTemplate;
+//    private final RestTemplate restTemplate;
+    private final AlbumsServiceClient albumsServiceClient;
 
     private final Environment env;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, RestTemplate restTemplate, Environment env) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, AlbumsServiceClient albumsServiceClient, Environment env) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.restTemplate = restTemplate;
+//        this.restTemplate = restTemplate;
+        this.albumsServiceClient = albumsServiceClient;
         this.env = env;
     }
 
@@ -64,6 +67,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserDetailsByEmail(String email) {
+        mapper = new ModelMapper();
         UserEntity userEntity = userRepository.findByEmail(email);
         if (userEntity == null) throw new UsernameNotFoundException(email);
         UserDto userDto =  mapper.map(userEntity, UserDto.class);
@@ -72,18 +76,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByUserId(String userId) {
+        mapper = new ModelMapper();
         UserEntity userEntity = userRepository.findByUserId(userId);
         if(userEntity == null) throw new UsernameNotFoundException(userId);
         UserDto userDto = mapper.map(userEntity, UserDto.class);
 
         final String ALBUMS_URL = String.format(env.getProperty("albums.url"), userDto.getUserId());
 
-        ResponseEntity<List<AlbumResponseModel>> albumsListResponse = restTemplate.exchange(
-                ALBUMS_URL,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<AlbumResponseModel>>() {});
-        List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
+//        ResponseEntity<List<AlbumResponseModel>> albumsListResponse = restTemplate.exchange(
+//                ALBUMS_URL,
+//                HttpMethod.GET,
+//                null,
+//                new ParameterizedTypeReference<List<AlbumResponseModel>>() {});
+        List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
         userDto.setAlbumsList(albumsList);
 
         return userDto;
