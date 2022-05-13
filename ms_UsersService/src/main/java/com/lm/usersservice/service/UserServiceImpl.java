@@ -5,8 +5,11 @@ import com.lm.usersservice.data.model.UserEntity;
 import com.lm.usersservice.repository.UserRepository;
 import com.lm.usersservice.shared.UserDto;
 import com.lm.usersservice.ui.model.AlbumResponseModel;
+import feign.FeignException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -36,8 +39,9 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 //    private final RestTemplate restTemplate;
     private final AlbumsServiceClient albumsServiceClient;
-
     private final Environment env;
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, AlbumsServiceClient albumsServiceClient, Environment env) {
         this.userRepository = userRepository;
@@ -88,7 +92,12 @@ public class UserServiceImpl implements UserService {
 //                HttpMethod.GET,
 //                null,
 //                new ParameterizedTypeReference<List<AlbumResponseModel>>() {});
-        List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+        List<AlbumResponseModel> albumsList = null;
+        try {
+            albumsList = albumsServiceClient.getAlbums(userId);
+        } catch (FeignException e) {
+           logger.error(e.getMessage());
+        }
         userDto.setAlbumsList(albumsList);
 
         return userDto;
