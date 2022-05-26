@@ -3,6 +3,7 @@ package com.lm.usersservice.security;
 import com.lm.usersservice.service.UserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,6 +37,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/actuator/**")
+                .permitAll()
                 .antMatchers("/h2-console/**")
                 .permitAll()
                 .antMatchers("/api/users/**")
