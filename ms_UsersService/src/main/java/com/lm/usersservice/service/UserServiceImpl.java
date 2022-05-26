@@ -92,6 +92,7 @@ public class UserServiceImpl implements UserService {
 //                HttpMethod.GET,
 //                null,
 //                new ParameterizedTypeReference<List<AlbumResponseModel>>() {});
+        logger.info("Checking Sleuth ");
         List<AlbumResponseModel> albumsList = null;
         try {
             albumsList = albumsServiceClient.getAlbums(userId);
