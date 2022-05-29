@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lm</groupId>
-    <artifactId>MS_UserAPI</artifactId>
+    <artifactId>ms_usersService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ms_UsersService</name>
     <description>UserAPI</description>
@@ -30,7 +30,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -129,7 +128,6 @@
             <version>2.2.8.RELEASE</version>
         </dependency>
     </dependencies>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -141,7 +139,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>

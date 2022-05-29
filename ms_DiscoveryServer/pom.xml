@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lm</groupId>
-    <artifactId>PhotoAppDiscoveryService</artifactId>
+    <artifactId>ms_discoveryService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>EurekaDiscoveryService</name>
     <description>EurekaDiscoveryService</description>
@@ -22,7 +22,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -54,7 +53,6 @@
             <artifactId>spring-cloud-starter-config</artifactId>
             <version>3.1.1</version>
         </dependency>
-
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -67,7 +65,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -84,5 +81,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
